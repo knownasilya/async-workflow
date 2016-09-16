@@ -26,9 +26,28 @@ const runner = new Runner({
     },
 
     install: {
-      fn() {
-        return Bluebird.resolve('install')
+      // Run in parallel
+      tasks: {
+        installA: {
+          fn() {
+            return new Bluebird((resolve) => {
+              setTimeout(() => {
+                resolve('installA')
+              }, 300)
+            })
+          }
+        },
+        installB: {
+          fn() {
+            return new Bluebird((resolve) => {
+              setTimeout(() => {
+                resolve('installB')
+              }, 100)
+            })
+          }
+        }
       },
+      // Run once all pass or any fail
       successTaskId: 'test',
       failureTaskId: 'cleanup'
     },
@@ -60,7 +79,7 @@ const results = await runner.start()
 
 ## TODO
 
-- [ ] Test parallel tasks
+- [x] Test parallel tasks
 - [ ] Figure out how results should be formatted/passed along
 - [ ] Time tasks
 - [ ] docker shell run
