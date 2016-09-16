@@ -15,7 +15,7 @@ module.exports = {
 
     install: {
       fn() {
-        return Bluebird.resolve('install')
+        return Bluebird.reject('install failed')
       },
       successTaskId: 'test',
       failureTaskId: 'cleanup'
