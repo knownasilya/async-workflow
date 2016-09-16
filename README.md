@@ -57,3 +57,10 @@ const runner = new Runner({
 
 const results = await runner.start()
 ```
+
+## TODO
+
+- [ ] Test parallel tasks
+- [ ] Figure out how results should be formatted/passed along
+- [ ] Time tasks
+- [ ] docker shell run
