@@ -15,8 +15,11 @@ const runner = new Runner({
   startTaskId: 'clone',
   tasks: {
     clone: {
-      fn() {
+      fn(options) {
         return Bluebird.resolve('clone')
+      },
+      options: {
+        repo: 'knownasilya/async-workflow'
       },
       successTaskId: 'install',
       failureTaskId: 'cleanup'
