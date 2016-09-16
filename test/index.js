@@ -10,6 +10,20 @@ test('requires workflow', t => {
   }, 'Invalid workflow specified', 'Throws on invalid workflow')
 })
 
+test('workflow requires startTaskId', async t => {
+  const runner = new Runner({})
+
+  t.throws(runner.start(), '`startTaskId` must be specified',
+    'Throws on invalid')
+})
+
+test('workflow requires startTask', async t => {
+  const runner = new Runner({startTaskId: 'a'})
+
+  t.throws(runner.start(), 'Invalid workflow - start task not found',
+    'Throws on invalid')
+})
+
 test('All pass', async t => {
   const workflow = require('./fixtures/all-pass')
 

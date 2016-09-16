@@ -21,10 +21,16 @@ module.exports = class Runner {
    *
    */
   start() {return __async(function*(){
-    const startTask = this.getTask(this.workflow.startTaskId)
+    const startTaskId = this.workflow.startTaskId
+
+    if (!startTaskId) {
+      throw new Error('`startTaskId` must be specified')
+    }
+
+    const startTask = this.getTask(startTaskId)
 
     if (!startTask) {
-      throw new Error('Invalid workflow - missing start task')
+      throw new Error('Invalid workflow - start task not found')
     }
 
     yield this.runTask(startTask)
@@ -106,10 +112,12 @@ module.exports = class Runner {
   }.call(this))}
 
   getTask(id, source) {
-    source = source || this.workflow.tasks
+    source = source || this.workflow.tasks || {}
     const task = source[id]
 
-    task._id = id
+    if (task) {
+      task._id = id
+    }
 
     return task
   }
