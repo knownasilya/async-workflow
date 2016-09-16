@@ -83,9 +83,10 @@ module.exports = class Runner {
 
       return Bluebird.resolve()
     } catch (err) {
+      this.results.push(err)
+
       if (task.failureTaskId) {
-        const failureResult = yield this.runTask(this.getTask(task.failureTaskId))
-        this.results.push(failureResult)
+        yield this.runTask(this.getTask(task.failureTaskId))
       } else {
         return Bluebird.reject(err)
       }
