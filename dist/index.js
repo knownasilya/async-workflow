@@ -76,7 +76,10 @@ module.exports = class Runner {
     const taskKeys = Object.keys(task.tasks)
 
     try {
-      yield Bluebird.all(taskKeys.map(key => this.runTask(task.tasks[key])))
+      yield Bluebird.all(taskKeys.map(key => {
+        const parallelTask = this.getTask(key, task.tasks)
+        return this.runTask(parallelTask)
+      }))
 
       if (task.successTaskId) {
         return yield this.runTask(this.getTask(task.successTaskId))
@@ -102,8 +105,9 @@ module.exports = class Runner {
     return Bluebird.resolve(this.results)
   }.call(this))}
 
-  getTask(id) {
-    const task = this.workflow.tasks[id]
+  getTask(id, source) {
+    source = source || this.workflow.tasks
+    const task = source[id]
 
     task._id = id
 
