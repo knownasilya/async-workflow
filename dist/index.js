@@ -11,6 +11,7 @@ module.exports = class Runner {
 
     options = options || {}
 
+    this.options = options
     this.workflow = workflow
     this.results = []
   }
@@ -94,7 +95,7 @@ module.exports = class Runner {
   }.call(this))}
 
   run(task) {return __async(function*(){
-    return task.fn()
+    return task.fn(task.options)
   }())}
 
   finish() {return __async(function*(){
