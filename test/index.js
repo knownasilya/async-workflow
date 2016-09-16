@@ -53,3 +53,13 @@ test('One failure', async t => {
   console.log(results)
   t.is(results.length, 3, 'Right number of tasks pass')
 })
+
+test('One failure - parallel', async t => {
+  const workflow = require('./fixtures/one-failure-parallel')
+
+  const runner = new Runner(workflow)
+  const results = await runner.start()
+
+  console.log(results)
+  t.is(results.length, 4, 'Right number of tasks pass')
+})
