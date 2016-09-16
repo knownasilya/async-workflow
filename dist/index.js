@@ -47,15 +47,15 @@ module.exports = class Runner {
       const result = yield this.run(task)
 
       this.results.push(`${task._id}:success:${result}`)
-      let successResult;
+      let successResult
 
       if (task.successTaskId) {
         debug(`runTask: '${task._id}' succeded, continuing to '${task.successTaskId}'`)
         successResult = yield this.runTask(this.getTask(task.successTaskId))
+        debug(`runTask: '${task.successTaskId}' succeded, no continuing task available.`)
+        debug(`runTask: '${task.successTaskId}' succeded, result '${successResult}'`)
       }
 
-      debug(`runTask: '${task._id}' succeded, no continuing task available.`)
-      debug(`runTask: '${task._id}' succeded, result '${successResult}'`)
       return Bluebird.resolve(successResult)
     } catch (err) {
       this.results.push(`${task._id}:failure:${err}`)
@@ -63,9 +63,7 @@ module.exports = class Runner {
 
       if (task.failureTaskId) {
         debug(`runTask: '${task._id}' failed, continuing to '${task.failureTaskId}'`)
-        const failureResult = yield this.runTask(this.getTask(task.failureTaskId))
-        debug(`runTask: '${task._id}' failed, result '${failureResult}'`)
-        this.results.push(`${task._id}:failure2:${failureResult}`)
+        yield this.runTask(this.getTask(task.failureTaskId))
       } else {
         debug(`runTask: '${task._id}' failed, no continuing task available.`)
         return Bluebird.reject(err)
@@ -103,7 +101,7 @@ module.exports = class Runner {
   }.call(this))}
 
   getTask(id) {
-    let task = this.workflow.tasks[id]
+    const task = this.workflow.tasks[id]
 
     task._id = id
 

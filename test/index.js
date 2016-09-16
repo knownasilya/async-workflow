@@ -3,7 +3,7 @@
 const test = require('ava')
 const Runner = require('../lib')
 
-test.skip('All pass', async t => {
+test('All pass', async t => {
   const workflow = require('./fixtures/all-pass')
 
   const runner = new Runner(workflow)
