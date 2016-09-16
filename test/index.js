@@ -3,6 +3,13 @@
 const test = require('ava')
 const Runner = require('../lib')
 
+test('requires workflow', t => {
+  t.throws(() => {
+    const runner = new Runner()
+    console.log(runner)
+  }, 'Invalid workflow specified', 'Throws on invalid workflow')
+})
+
 test('All pass', async t => {
   const workflow = require('./fixtures/all-pass')
 
