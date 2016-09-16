@@ -4,6 +4,7 @@ Run JSON based workflows
 
 [![npm](https://img.shields.io/npm/v/async-workflow.svg?maxAge=2592000?style=flat-square)](http://npmjs.com/package/async-workflow)
 [![Travis branch](https://img.shields.io/travis/knownasilya/async-workflow/master.svg?maxAge=2592000?style=flat-square)](https://travis-ci.org/knownasilya/async-workflow)
+[![Coveralls branch](https://img.shields.io/coveralls/knownasilya/async-workflow/master.svg?maxAge=2592000?style=flat-square)](https://coveralls.io/github/knownasilya/async-workflow)
 
 ## Example
 
